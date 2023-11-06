@@ -1,7 +1,7 @@
 <template>
 <Header />
 
-<Home />
+<RouterView />
 
 <Footer />
 </template>
@@ -9,15 +9,21 @@
 <script>
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
-import Home from './pages/Home.vue';
+import store from './scripts/store';
 
 
 export default {
   name: 'App',
   components: {
     Header,
-    Footer,
-    Home
+    Footer
+},
+setup() {
+const id = sessionStorage.getItem("id");
+
+if(id){
+  store.commit("setAccount", id);
+}
 }
 }
 </script>
