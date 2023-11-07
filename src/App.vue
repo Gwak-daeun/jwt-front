@@ -10,6 +10,9 @@
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 import store from './scripts/store';
+import axios from 'axios';
+import { useRoute } from 'vue-router';
+import { watch } from 'vue';
 
 
 export default {
@@ -19,6 +22,27 @@ export default {
     Footer
 },
 setup() {
+
+  const check = () => {
+                
+    axios.get('/api/account/check').then(({data}) => {
+      console.log(data);
+
+      if(data){
+        store.commit("setAccount", data || 0);
+      } 
+      // else {
+      //   store.commit("setAccount", 0);
+      // }
+    });
+  };
+
+  const route = useRoute();
+
+  watch(route, () => {
+      check();
+  });
+
 const id = sessionStorage.getItem("id");
 
 if(id){
