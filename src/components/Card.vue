@@ -8,7 +8,9 @@
             <span class=" badge bg-danger"> {{ item.discountPer }}%</span> 
             </p>
             <div class="d-flex justify-content-between align-items-center">
-             <button class="btn btn-primary">구입하기</button>
+             <button class="btn btn-primary" @click="addToCart(item.id)">
+              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+             </button>
               <small class="price text-body-secondary">
                 {{ lib.getNumberFormatted(item.price) }}원
               </small>
@@ -21,9 +23,10 @@
 </template>
 
 <script>
-import { reactive } from 'vue';
+// import { reactive } from 'vue';
 
 import lib from '../scripts/lib.js';
+import axios from 'axios';
 
     export default {
         name: 'Card',
@@ -32,13 +35,19 @@ import lib from '../scripts/lib.js';
         },
         setup() {
 
-          const state = reactive({
+          // const state = reactive({
             
-          });
+          // });
+
+          const addToCart = (itemId) => {
+              axios.post(`/api/cart/items/${itemId}`).then((res) => {
+                console.log(res)
+              })
+          }
 
           return{ 
             lib,
-            state
+            addToCart
           }
         }
     }
