@@ -41,7 +41,10 @@ import axios from 'axios';
 
           const addToCart = (itemId) => {
               axios.post(`/api/cart/items/${itemId}`).then((res) => {
-                console.log(res)
+                console.log("success: " , res);
+              }).catch((err) => {
+
+                console.log(err);
               })
           }
 
