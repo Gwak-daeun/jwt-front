@@ -34,6 +34,9 @@
       <router-link to="/cart" class="cart btn"  v-if="$store.state.account.id">
         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
       </router-link>
+      <router-link to="/admin" >
+        관리자 페이지로 이동
+      </router-link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>

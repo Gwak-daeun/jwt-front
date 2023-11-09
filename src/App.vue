@@ -25,16 +25,16 @@ setup() {
 
   const check = () => {
                 
-    axios.get('/api/account/check').then(({data}) => {
-      console.log(data);
+    // axios.get('/api/account/check').then(({data}) => {
+    //   console.log(data);
 
-      if(data){
-        store.commit("setAccount", data || 0);
-      } 
+    //   if(data){
+    //     store.commit("setAccount", data || 0);
+    //   } 
       // else {
       //   store.commit("setAccount", 0);
       // }
-    });
+    // });
   };
 
   const route = useRoute();

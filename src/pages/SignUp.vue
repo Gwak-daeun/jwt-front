@@ -1,6 +1,6 @@
 <template>
     <div class="form-signin w-100 m-auto">
-    <h1 class="h3 mb-3 fw-normal">Login</h1>
+    <h1 class="h3 mb-3 fw-normal">SignUp</h1>
 
     <div class="form-floating">
       <input 
@@ -9,10 +9,11 @@
         id="floatingInput" 
         placeholder="name@example.com" 
         v-model="state.form.email"
-        @keyup.enter="submit()"
+        @keyup.enter="signUp()"
       >
       <label for="floatingInput">Email address</label>
     </div>
+
     <div class="form-floating">
       <input 
         type="password" 
@@ -20,55 +21,77 @@
         id="floatingPassword" 
         placeholder="Password"  
         v-model="state.form.password"
-        @keyup.enter="submit()"
+        @keyup.enter="signUp()"
       >
       <label for="floatingPassword">Password</label>
     </div>
 
-    <div class="form-check text-start my-3">
-      <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
-      <label class="form-check-label" for="flexCheckDefault">
-        Remember me
-      </label>
+    <div class="form-floating">
+      <input 
+        type="text" 
+        class="form-control" 
+
+        v-model="state.form.age"
+        @keyup.enter="signUp()"
+      >
+      <label for="floatingPassword">Age</label>
     </div>
-    <button class="btn btn-primary w-100 py-2" @click="submit()">Sign in</button>
+
+    <div class="form-floating">
+      <input 
+        type="text" 
+        class="form-control" 
+
+
+        v-model="state.form.city"
+        @keyup.enter="signUp()"
+      >
+      <label for="floatingPassword">City</label>
+    </div>
+
+    <button class="btn btn-primary w-100 py-2" @click="signUp()">Sign in</button>
     <p class="mt-5 mb-3 text-body-secondary">&copy; 2017–2023</p>
 </div>
 </template>
 
+
 <script>
-import { reactive } from 'vue'
+import { reactive } from 'vue';
 import axios from 'axios';
-import store from '@/scripts/store';
-import router from '@/scripts/router';
 export default {
+
+    
+
     setup() {
+
+        const signUp = () => {
+            axios.post('/api/account/signup', state.form)
+            .then((res) => {
+                location.replace('/');
+            })
+            .catch((err) => {
+                window.alert(err);
+            });
+        };
+        
+
         const state = reactive({
             form: {
                 email: "",
-                password: ""
+                password: "",
+                age: "",
+                city: ""
             }
         });
 
-        const submit = () => {
-            axios.post("/api/account/login", state.form).then((res) => {
-                store.commit('setAccount', res.data);
-                sessionStorage.setItem("id", res.data);
-                router.push({path: "/"});
-                alert("로그인 완료");
-            }).catch((err) => {
-                console.log(err);
-                window.alert("로그인 정보가 존재하지 않습니다.");
-            });
-        }
-
-        return{
+        return {
             state,
-            submit
+            signUp
         }
-    }
+    },
 }
 </script>
+
 
 <style scoped>
 .form-signin {
