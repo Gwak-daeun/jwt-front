@@ -11,7 +11,7 @@
         v-model="state.form.email"
         @keyup.enter="signUp()"
       >
-      <label for="floatingInput">Email address</label>
+      <label for="floatingInput">Username</label>
     </div>
 
     <div class="form-floating">

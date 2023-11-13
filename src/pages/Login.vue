@@ -4,14 +4,14 @@
 
     <div class="form-floating">
       <input 
-        type="email" 
+        type="username" 
         class="form-control" 
         id="floatingInput" 
         placeholder="name@example.com" 
-        v-model="state.form.email"
+        v-model="state.form.username"
         @keyup.enter="submit()"
       >
-      <label for="floatingInput">Email address</label>
+      <label for="floatingInput">Username</label>
     </div>
     <div class="form-floating">
       <input 
@@ -45,7 +45,7 @@ export default {
     setup() {
         const state = reactive({
             form: {
-                email: "",
+                username: "",
                 password: ""
             }
         });

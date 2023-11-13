@@ -34,9 +34,11 @@
       <router-link to="/cart" class="cart btn"  v-if="$store.state.account.id">
         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
       </router-link>
-      <router-link to="/admin" >
-        관리자 페이지로 이동
-      </router-link>
+      <!-- <router-link to="/admin" > -->
+        <button class="btn btn-primary" @click="goToAdmin()">
+          관리자 페이지로 이동
+        </button>
+      <!-- </router-link> -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -54,15 +56,24 @@ import axios from 'axios';
 export default {
   name: 'Header',
   setup() {
+
     const logout = () => {
       axios.post("/api/account/logout").then(() => {
         store.commit('setAccount', 0);
         router.push("/");
-        
+      });
+    };
 
-      })
+    const goToAdmin = () => {
+        axios.get("/api/page/admin").catch((err) => 
+        
+        console.log(err)
+        );
       };
-    return {logout};
+    return {
+      logout,
+      goToAdmin
+    };
   }
 }
 </script>
