@@ -51,10 +51,10 @@ export default {
         });
 
         const submit = () => {
-            axios.post("/api/account/login", state.form).then((res) => {
+            axios.post("/api/login", state.form).then((res) => {
                 store.commit('setAccount', res.data);
                 sessionStorage.setItem("id", res.data);
-                router.push({path: "/"});
+                // router.push({path: "/"});
                 alert("로그인 완료");
             }).catch((err) => {
                 console.log(err);

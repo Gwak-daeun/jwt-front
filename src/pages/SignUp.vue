@@ -7,11 +7,22 @@
         type="email" 
         class="form-control" 
         id="floatingInput" 
+        v-model="state.form.username"
+        @keyup.enter="signUp()"
+      >
+      <label for="floatingInput">Username</label>
+    </div>
+
+    <div class="form-floating">
+      <input 
+        type="email" 
+        class="form-control" 
+        id="floatingInput" 
         placeholder="name@example.com" 
         v-model="state.form.email"
         @keyup.enter="signUp()"
       >
-      <label for="floatingInput">Username</label>
+      <label for="floatingInput">Email</label>
     </div>
 
     <div class="form-floating">
@@ -64,10 +75,16 @@ export default {
 
     setup() {
 
+      const config = {
+          baseUrl: 'http://localhost:8080'
+      };
+
+
         const signUp = () => {
-            axios.post('/api/account/signup', state.form)
+            axios.post(`http://localhost:8080/api/user/signup`, state.form)
             .then((res) => {
-                location.replace('/');
+                console.log(res.data);
+                location.replace(res.data);
             })
             .catch((err) => {
                 window.alert(err);
@@ -77,6 +94,7 @@ export default {
 
         const state = reactive({
             form: {
+                username: "",
                 email: "",
                 password: "",
                 age: "",
