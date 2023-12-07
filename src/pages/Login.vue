@@ -31,7 +31,14 @@
         Remember me
       </label>
     </div>
-    <button class="btn btn-primary w-100 py-2" @click="submit()">Sign in</button>
+    <button class="btn btn-primary w-100 py-2" @click="submit()">로그인</button>
+    <button @click="oauthLoigin()">구글 로그인</button>
+    <a href="http://localhost:8080/oauth2/authorization/google">
+      <button>
+        a태그 구글 로그인
+      </button>
+    </a>
+    <!-- <button @click="get()">헤더값 받아오기</button> -->
     <p class="mt-5 mb-3 text-body-secondary">&copy; 2017–2023</p>
 </div>
 </template>
@@ -50,21 +57,46 @@ export default {
             }
         });
 
+
         const submit = () => {
             axios.post("/api/login", state.form).then((res) => {
-                store.commit('setAccount', res.data);
-                sessionStorage.setItem("id", res.data);
-                // router.push({path: "/"});
-                alert("로그인 완료");
+                console.log("로그인 완료");
+
+                console.log(res.data);
+
+                const accessToken = res.data.accessToken;
+                const refreshToken = res.data.refreshToken;
+
+
+                  // console.log("응답 : " + JSON.stringify (res));
+                  console.log("엑세스 토큰: " + res.data.accessToken);
+                  console.log("리프레시 토큰: " + res.data.refreshToken);
+                  console.log("유저네임: " + res.data.username);
+
+                  localStorage.setItem("accessToken", accessToken);
+                  localStorage.setItem("refreshToken", refreshToken);
+                  localStorage.setItem("username", res.data.username);
+
+                  // router.push("/");
+
             }).catch((err) => {
                 console.log(err);
                 window.alert("로그인 정보가 존재하지 않습니다.");
             });
         }
 
+        const oauthLoigin = () => {
+          axios.get("http://localhost:8080/oauth2/authorization/google")
+          .then((res) => console.log(res))
+          .catch((err) => console.log(err));
+        }
+
         return{
             state,
-            submit
+            submit,
+            oauthLoigin,
+            // get,
+            
         }
     }
 }

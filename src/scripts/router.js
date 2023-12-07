@@ -6,6 +6,7 @@ import Cart from '../pages/Cart';
 import Order from '../pages/Order';
 import Orders from '../pages/Orders';
 import Admin from '../pages/Admin';
+import AdditionalInfo from '../pages/AdditionalInfo';
 
 const routes = [
     {path: '/', component: Home},
@@ -14,7 +15,8 @@ const routes = [
     {path: '/cart', component: Cart},
     {path: '/orders', component: Orders},
     {path: '/admin', component: Admin},
-    {path: '/order', component: Order}
+    {path: '/order', component: Order},
+    {path: '/additionalInfo', component: AdditionalInfo}
 ]
 
 const router = createRouter({

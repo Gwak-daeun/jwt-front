@@ -58,7 +58,7 @@ export default {
   setup() {
 
     const logout = () => {
-      axios.post("/api/account/logout").then(() => {
+      axios.post("/api/logout").then(() => {
         store.commit('setAccount', 0);
         router.push("/");
       });
