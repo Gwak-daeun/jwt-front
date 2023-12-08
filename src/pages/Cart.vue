@@ -5,7 +5,12 @@
         <li v-for="(i, idx) in state.items" :key="idx">
           <img :src="i.imgPath" />
           <span class="name">{{ i.name }}</span>
-          <span class="price">{{ lib.getNumberFormatted( i.price - i.price * i.discountPer/100 ) }} 원</span>
+          <span class="price"
+            >{{
+              lib.getNumberFormatted(i.price - (i.price * i.discountPer) / 100)
+            }}
+            원</span
+          >
           <i class="fa fa-trash" @click="remove(i.id)"></i>
         </li>
       </ul>
@@ -15,42 +20,38 @@
 </template>
 
 <script>
-import axios from 'axios'
-import { reactive } from 'vue';
-import lib from '@/scripts/lib';
+import axios from "axios";
+import { reactive } from "vue";
+import lib from "@/scripts/lib";
 
 export default {
-    setup() {
+  setup() {
+    const state = reactive({
+      items: [],
+    });
 
-      const state = reactive({
-        items: []
-      });
-    
+    // const load = () => {
+    //   axios.get("/api/cart/items").then(({data}) => {
+    //   console.log(data);
+    //   state.items = data;
+    // });
+    // };
 
-      const load = () => {
-        axios.get("/api/cart/items").then(({data}) => {
-        console.log(data);
-        state.items = data;
-      });
-      };
+    // const remove = (itemId) => {
+    //     axios.delete(`/api/cart/items/${itemId}`).then(() => {
+    //         load();
+    //     });
+    // };
 
-      
+    // load();
 
-      const remove = (itemId) => {
-          axios.delete(`/api/cart/items/${itemId}`).then(() => {
-              load();
-          });
-      };
-
-      load();
-
-        return{
-           state,
-           lib,
-           remove
-        }
-    }
-}
+    return {
+      state,
+      // lib,
+      // remove,
+    };
+  },
+};
 </script>
 
 <style scoped>
@@ -92,6 +93,4 @@ img {
   padding: 30px 50px;
   font-size: 20px;
 }
-
-
 </style>
