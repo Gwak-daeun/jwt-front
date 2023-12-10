@@ -9,7 +9,6 @@
         id="floatingInput"
         placeholder="name@example.com"
         v-model="state.form.username"
-        @keyup.enter="submit()"
       />
       <label for="floatingInput">Username</label>
     </div>
@@ -20,7 +19,6 @@
         id="floatingPassword"
         placeholder="Password"
         v-model="state.form.password"
-        @keyup.enter="submit()"
       />
       <label for="floatingPassword">Password</label>
     </div>
@@ -36,7 +34,7 @@
         Remember me
       </label>
     </div>
-    <button class="btn btn-primary w-100 py-2" @click="submit()">로그인</button>
+    <button class="btn btn-primary w-100 py-2" @click="login()">로그인</button>
     <button @click="oauthLoigin()">구글 로그인</button>
     <a href="http://localhost:8080/oauth2/authorization/google">
       <button>a태그 구글 로그인</button>
@@ -66,7 +64,7 @@ export default {
       },
     });
 
-    const submit = () => {
+    const login = () => {
       console.log("로그인 요청");
       axios
         .post("http://localhost:8080/api/login", state.form)
@@ -99,7 +97,7 @@ export default {
           expireCookie("refreshToken");
           expireCookie("username");
 
-          // router.push("/");
+          router.push(res.data.redirectPage);
         })
         .catch((err) => {
           console.log(err);
@@ -116,8 +114,9 @@ export default {
 
     return {
       state,
-      submit,
+      // submit,
       oauthLoigin,
+      login,
       // get,
     };
   },

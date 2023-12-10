@@ -122,11 +122,12 @@ export default {
     //api 요청
     const test = () => {
       const accessToken = localStorage.getItem("accessToken");
+      console.log("요청 보내는 엑세스 토큰 : " + accessToken);
       axios
         .get("http://localhost:8080/api/test", {
           headers: {
-            Authorization: encodeURI(`Bearer ${accessToken}`),
-            username: encodeURI(localStorage.getItem("username")),
+            Authorization: `Bearer ${accessToken}`,
+            username: localStorage.getItem("username"),
           },
         })
         .then((res) => {
@@ -138,7 +139,7 @@ export default {
             state.errMsg = err.response.data;
             console.log("에러 내용 : " + state.errMsg);
 
-            if (state.errMsg === "please send refreshToken") {
+            if (state.errMsg.length > 0) {
               console.log("리프레시 토큰 요구하는 api수행");
 
               state.errMsg = "";
@@ -170,7 +171,7 @@ export default {
           localStorage.setItem("refreshToken", res.data.refreshToken);
         })
         .catch((err) => {
-          console.log("엑세스 토큰 재발급 에러 : " + err);
+          console.log("엑세스 토큰 재발급 에러 : " + err.response);
 
           state.errMsg = err.response.data;
           console.log("에러 내용 : " + state.errMsg);
@@ -184,8 +185,30 @@ export default {
     };
 
     const logout = () => {
-      localStorage.clear();
+      axios
+        .post(
+          "http://localhost:8080/api/userLogout",
+          {
+            username: localStorage.getItem("username"),
+          },
+          {
+            headers: {
+              username: localStorage.getItem("username"),
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      // localStorage.clear();
+
       alert("로그아웃 되었습니다.");
+
+      router.push("/");
     };
 
     return {
